@@ -17,14 +17,6 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
-STATIC_URL = '/static/'
-
-# Load static to Django
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
-
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
