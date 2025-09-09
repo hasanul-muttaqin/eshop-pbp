@@ -5,7 +5,7 @@ class MainConfig(AppConfig):
     name = 'main'
 
     def ready(self):
-        # Run migrations automatically if tables are missing
+        # tambah sesuatu di local buat trobleshoot
         from django.core.management import call_command
         try:
             call_command("migrate", interactive=False)
