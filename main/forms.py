@@ -9,7 +9,7 @@ class ProductsForm(forms.ModelForm):
             "name",
             "brand",
             "price",
-            "description",   # fixed typo
+            "description",
             "thumbnail",
             "category",
             "stock",

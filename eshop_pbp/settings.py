@@ -33,6 +33,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1","hasanul-muttaqin-eshoppbp.pbp.cs.ui.ac.id"]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://pbp.cs.ui.ac.id/web/project/hasanul.muttaqin/eshoppbp"
+]
+
+
 # Application definition
 
 INSTALLED_APPS = [

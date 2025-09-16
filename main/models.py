@@ -5,8 +5,8 @@ class Product(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     
     name = models.CharField(max_length=255)  # Nama item
-    brand = models.CharField(max_length=100, default="ini nama brand")  # Brand/merk produk
-    price = models.PositiveIntegerField()  # Harga item (Rp)
+    brand = models.CharField(max_length=100)  # Brand/merk produk
+    price = models.PositiveIntegerField(default= 0)  # Harga item (Rp)
     description = models.TextField()  # Deskripsi item
     thumbnail = models.URLField(blank=True, null=True)  # Gambar produk
     category = models.CharField(max_length=100)  # Kategori produk

@@ -1,3 +1,5 @@
+# Tugas 1
+
 ## 1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
 
     - langkah 1: menjalankan perintah 'django-admin startproject eshop_pbp' di directory eshop-pbp via windows powershell. langkah ini dilakukan untuk menyiapkan struktur projek(manage.py dan juga folder eshop_pbp yang berisi settings.py, urls.py, dll)
@@ -64,4 +66,58 @@
     ga ada, slide sudah cukup jelas sehingga asistensi tidak terlalu diperlukan. tapi respons asdos cepat dalam menanggapi pertanyaan mahasiswa dan penjelasan yang diberikan mudah diikuti.
 
 ---
+
+# Tugas 2
+
+## 1. Mengapa kita memerlukan data delivery dalam pengimplementasian platform?
+### Ada beberapa alasan mengapa data delivery diperlukan dalam implementasi platform
+- komunikasi antar komponen: front-end butuh data dari back-end agar UI bisa ditampilkan
+- skalabilitas: pemisahan front-end dan back-end memungkinkan development terpisah sehingga skalabilitas lebih mudah
+- interoperabilitas: third party integration lebih mudah dengan format data JSON/XML
+- Performa & pengalaman pengguna: data yang dikirim terstruktur memungkinkan caching, partial updates (AJAX), lazy loading, sehingga UX lebih responsif.
+- Keamanan & kontrol akses: pengiriman terstruktur memudahkan otentikasi, otorisasi, rate-limiting, logging.
+- Versi & backward compatibility: API versioning memudahkan migrasi tanpa memecah klien lama.
+- Real-time & notifikasi: websocket/sse memungkinkan push data untuk fitur chat/live updates.
+
+## 2.  Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
+menurut saya lebih baik JSON, alasan JSON lebih popular ialah sebagai berikut:
+- lebih ringan
+- lebih mudah parsing ke JS karena native
+- mendukung tipe data yang lebih banyak. seperti number, string, boolean, array, object, etc
+- lebih bagus untuk data terstruktur karena variasi tipe data
+- readability lebih bagus
+- terhubung ke ekosistem java dan JS yang extensive(contoh, RESTful API)
+
+## 3.  Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?
+fungsi is_valid()
+- Memicu proses full_clean di form
+    - Validasi field-by-field (field validators, tipe data, required, min/max).
+    - Panggil clean_<field>() custom jika ada.
+    - Panggil clean() form-level untuk cross-field checks.
+- Mengisi form.cleaned_data (versi data yang sudah dibersihkan/di-cast).
+- Mengisi form.errors jika ada error.
+- Mengembalikan True jika semua valid, False jika ada error.
+##### fungsi: mencegah tipe data salah, menyediakan forms.error untuk user, membersihkan data untuk mencegah masalah keamanan seperti SQL inject, mencegah exception
+
+## 4. Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
+
+#### fungsi:
+- Django meletakkan token unik per sesi (atau cookie) dan memverifikasinya pada request POST/PUT/DELETE yang diterima.
+- Jika token tidak cocok/absent, middleware Django menolak request → mencegah tindakan atas nama pengguna tanpa izin.
+#### risiko tidak memakai CSRF token
+- inject laman jahat untuk menggunakan sesi pengguna lain
+- korupsi data oleh sistem
+- privilege escalation oleh attacker
+- akses yang tidak diauthorisasi
+
+## 5.  Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+1. keempat fungsi dibuat dengan menggunakan fungsi bawaan serialize dari Django.core. untuk show_xml() dan show_json() sebenarnya sangan mirip dengan grab semua object product .all() dan kemudian di serialize ke xml atau json, sedangkan untuk kedua fungsi ..._by_id() menggunakan variable baru products_id, yang nantinya akan digunakan untuk menjalankan fungsi .get() untuk mengambil data produk spesifik, kemudian di-wrap dalam list agar bisa di-serialize
+2. dalam urls.py ditambahkan path /json dan /xml yang nantinya akan memanggil fungsi show_xml() dan show_json() untuk menampilkan semua product dalam template masing masing. dibuat juga path /xml/<str:products_id> dan /json/<str:products_id> yang akan memanggil masing-masing fungsi by id dengan menggunakan nilai yang diinput di url sebagai variable input products_id untuk fungsi
+3. menambahkan button add di main/html yang route ke path /create-products dan juga jika tidak ada product akan muncul hyperlink 'add one' yang routing ke path yg sama. kemudian ada juga tombol 'Detail' dan on-click di card product yang routing ke /products/<id>
+4. method create_products() di views.py memanggil forms.py lalu render create_products.html, yang memiliki input field untuk isi forms.py, dengan menekan button 'add product' user akan dikembalikan ke main.py yg mana akan lanjut cek validitas form sebelum menjalankan request method POST yang menambahkan form yang telah diisi sebagai produk sebelum mengembalikan user ke main
+5. method show_products() di views.py akan mengambil id yang tertera dipanggil dalam URL request dan kemudian render show_products.html, mengisi field data dengan field data product yang uuid nya dipanggil. ada juga tombol 'back' yang memanggil url main untuk kembali ke main view
+
+## 6. Apakah ada feedback untuk asdos di tutorial 2 yang sudah kalian kerjakan?
+    gk ada, alhamdulillah dapet 100
+
 
