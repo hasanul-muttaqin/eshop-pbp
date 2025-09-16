@@ -120,4 +120,15 @@ fungsi is_valid()
 ## 6. Apakah ada feedback untuk asdos di tutorial 2 yang sudah kalian kerjakan?
     gk ada, alhamdulillah dapet 100
 
+## foto
+show_xml()
+![alt text](image.png)
 
+show_xml_by_id()
+![alt text](image-1.png)
+
+show_json()
+![alt text](image-2.png)
+
+show_json_by_id()
+![alt text](image-3.png)
