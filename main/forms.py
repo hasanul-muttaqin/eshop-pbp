@@ -17,11 +17,11 @@ class ProductsForm(forms.ModelForm):
         ]
         widgets = {
             "name": forms.TextInput(attrs={"class": "form-control", "placeholder": "Product name"}),
-            "brand": forms.TextInput(attrs={"class": "form-control"}),
+            "brand": forms.TextInput(attrs={"class": "form-control", "placeholder": "Product brand"}),
             "price": forms.NumberInput(attrs={"class": "form-control", "min": 0}),
-            "description": forms.Textarea(attrs={"class": "form-control", "rows": 4}),
+            "description": forms.Textarea(attrs={"class": "form-control", "rows": 4, "placeholder": "desc..."}),
             "thumbnail": forms.URLInput(attrs={"class": "form-control", "placeholder": "https://..."}),
-            "category": forms.TextInput(attrs={"class": "form-control"}),
+            "category": forms.TextInput(attrs={"class": "form-control", "placeholder": "Product category"}),
             "stock": forms.NumberInput(attrs={"class": "form-control", "min": 0}),
             "is_featured": forms.CheckboxInput(attrs={"class": "form-check-input"}),
         }
