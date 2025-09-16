@@ -1,20 +1,21 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product
+from .forms import ProductsForm
 import uuid
 
 def main_view(request):
-    product, created = Product.objects.get_or_create(
-        id=uuid.UUID("00000000-0000-0000-0000-000000000001"),
-        defaults={
-            "name": "Liverpool Original Jersey LFC Away 24/25",
-            "brand": "Jersey",
-            "price": 899000,
-            "description": "Jersey Luar Kandang Liverpool Musim 2024/2025 dengan teknologi DRY-FIT agar tetap nyaman beraktivitas",
-            "thumbnail": "https://example.com/liverpool-jersey.jpg",
-            "category": "Jersey",
-            "stock": 25,
-            "is_featured": True,
-        }
-    )
+    products = Product.objects.all()
+    return render(request, "main.html", {"products": products})
 
-    return render(request, "main.html", {"product": product})
+def create_products(request):
+    form = ProductsForm(request.POST or None)  # no request.FILES needed for URLField
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        return redirect("main:main_view")   # sends user back to main list
+
+    return render(request, "create_products.html", {"form": form})
+
+def show_products(request, id):  # singular: detail view
+    product = get_object_or_404(Product, pk=id)
+    return render(request, "show_products.html", {"product": product})

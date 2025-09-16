@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Add Product - 67 Sportswear</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: linear-gradient(135deg,#f8fafc,#e0f2ff); font-family: 'Segoe UI', Tahoma, sans-serif; }
+    .form-header { background: linear-gradient(90deg,#3b82f6,#ef4444); color:white; padding:12px 18px; border-radius:0 0 12px 12px; }
+    .form-card { background:white; padding:22px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.06); margin-top:20px; }
+    .btn-standard { background:#ef4444; color:#fff; border:none; padding:10px 16px; border-radius:8px; font-weight:700; }
+    .form-check-label { margin-left:8px; }
+  </style>
+</head>
+<body>
+  <div class="form-header">➕ Add New Product</div>
+
+  <div class="container">
+    <div class="form-card col-lg-8 mx-auto">
+      <form method="POST">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <div class="mb-3">
+          {{ form.name.label_tag }} 
+          {{ form.name }}
+          <div class="text-danger small">{{ form.name.errors }}</div>
+        </div>
+
+        <div class="mb-3">
+          {{ form.brand.label_tag }}
+          {{ form.brand }}
+          <div class="text-danger small">{{ form.brand.errors }}</div>
+        </div>
+
+        <div class="mb-3">
+          {{ form.price.label_tag }}
+          {{ form.price }}
+          <div class="text-danger small">{{ form.price.errors }}</div>
+        </div>
+
+        <div class="mb-3">
+          {{ form.thumbnail.label_tag }}
+          {{ form.thumbnail }}
+          <div class="text-danger small">{{ form.thumbnail.errors }}</div>
+        </div>
+
+        <div class="mb-3">
+          {{ form.category.label_tag }}
+          {{ form.category }}
+          <div class="text-danger small">{{ form.category.errors }}</div>
+        </div>
+
+        <div class="mb-3">
+          {{ form.stock.label_tag }}
+          {{ form.stock }}
+          <div class="text-danger small">{{ form.stock.errors }}</div>
+        </div>
+
+        <div class="mb-3">
+          {{ form.description.label_tag }}
+          {{ form.description }}
+          <div class="text-danger small">{{ form.description.errors }}</div>
+        </div>
+
+        <div class="form-check mb-3">
+          {{ form.is_featured }} {{ form.is_featured.label_tag }}
+          <div class="text-danger small">{{ form.is_featured.errors }}</div>
+        </div>
+
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-standard">Add Product</button>
+          <a href="{% url 'main:main_view' %}" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
+{% endblock %}

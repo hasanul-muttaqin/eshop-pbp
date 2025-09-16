@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        /* Standard action button (red, desaturated, consistent) */
+    .btn-standard {
+        background: #ef4444;               
+        color: #fff;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-weight: 700;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .btn-standard:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,0.12); }
+    .btn-standard-outline {
+        background: transparent;
+        color: #ef4444;
+        border: 2px solid #ef4444;
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-weight: 700;
+    }
+    .btn-standard-sm { padding: 6px 10px; font-size: .9rem; border-radius: 6px; }
+</style>
+    {% block meta %} {% endblock meta %}
+</head>
+
+<body>
+    {% block content %} {% endblock content %}
+</body>
+</html>
