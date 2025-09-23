@@ -30,14 +30,41 @@
     .product-thumb { max-height: 180px; object-fit: cover; border-radius: 10px; }
     .featured-badge { position:absolute; top:10px; right:10px; background: linear-gradient(45deg,#ef4444,#fca5a5); color:white; padding:6px 12px; border-radius: 18px; font-weight:700; }
     /* button styles (standardized) */
-    .btn-standard { background:#ef4444; color:#fff; border:none; padding:10px 16px; border-radius:8px; font-weight:700; }
-    .btn-standard-sm { padding:6px 10px; font-size:.9rem; border-radius:6px; }
-    footer {
-
-        text-align: center;
-        padding: 3px;
+    .credit {
+        text-align: right;
+        padding: 0px;
         color: rgb(133, 151, 163);
-        }
+      }
+    .last-login {
+        text-align: left;
+        padding: 0px;
+        color: rgb(133, 151, 163);
+      }
+    footer {
+    display: flex;                 
+    justify-content: space-between; 
+    align-items: center;            
+    padding: 3px 8px;
+    } 
+    .top {
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+    }
+    .filter-wrapper select {
+    color: #000000;
+    font-weight: 600;
+    padding: 8px 36px 10px 12px;
+    border: #1e293b;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,.15);
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 18px;
+    transition: background .2s;
+    margin-bottom: 20px
+  }
   </style>
 </head>
 <body>
@@ -46,10 +73,21 @@
     <div>
       <!-- small red add button -->
       <a href="{% url 'main:create_products' %}" class="btn btn-sm btn-danger">+ Add Product</a>
+      <a href="{%url 'main:logout' %}" class="btn btn-sm btn-danger">Logout</a>
     </div>
   </div>
-
   <div class="container my-4">
+          <div class="top">
+            <form id="product-filter" method="get" class="filter-wrapper">
+              <select name="filter" onchange="this.form.submit()">
+                <option value="all" {% if request.GET.filter == 'all' %}selected{% endif %}>All products</option>
+                <option value="my"  {% if request.GET.filter == 'my'  %}selected{% endif %}>My products</option>
+              </select>
+            </form>
+            <div>
+              <h5 style="padding-bottom: 10px;">{{user}}</h5>
+            </div>
+          </div>
     {% if products %}
       {% for product in products %}
         <div class="card product-card mb-4 p-3" onclick= location.href='{% url 'main:show_products' product.id %}'>
@@ -59,7 +97,13 @@
             </div>
             <div class="col-md-8">
               <h5 class="mb-1">{{ product.name }}</h5>
-              <p class="text-muted mb-1">{{ product.brand }} • {{ product.category }}</p>
+              <p class="text-muted mb-1">{{ product.brand }} • {{ product.category }} • 
+                {% if product.user %}
+                  {{ product.user.username }}
+                {% else %}
+                  Anonymous
+                {% endif %}
+                </p>
               <p class="mb-2 text-truncate" style="max-width:100%;">{{ product.description|truncatewords:25 }}</p>
               <div class="d-flex justify-content-between align-items-end">
                 <div>
@@ -79,12 +123,25 @@
         </div>
       {% endfor %}
     {% else %}
-      <div class="alert alert-info text-center">
-        No products available. Be the first to <a href="{% url 'main:create_products' %}">add one</a>!
-      </div>
+      {% if not products %}
+        {% if filter == "my" %}
+          <div class="alert alert-warning text-center">
+            You haven't added any product yet. 
+            <a href="{% url 'main:create_products' %}">Add one</a> now!
+          </div>
+        {% else %}
+          <div class="alert alert-info text-center">
+            No products available. Be the first to 
+            <a href="{% url 'main:create_products' %}">add one</a>!
+          </div>
+        {% endif %}
+      {% endif %}
     {% endif %}
   </div>
-  <footer><p>67 Sportswear, by: B - Hasanul Muttaqin - 2406413331</p></footer>
+  <footer>
+    <p class="credit">67 Sportswear, by: B - Hasanul Muttaqin - 2406413331</p>
+    <p class="last-login">Last login: {{ last_login }}</p>
+  </footer>
 </body>
 </html>
 {% endblock %}

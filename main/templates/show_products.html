@@ -32,7 +32,13 @@
 
       <div class="col-md-7">
         <h2>{{ product.name }}</h2>
-        <p class="text-muted"><strong>Brand:</strong> {{ product.brand }} · <strong>Category:</strong> {{ product.category }}</p>
+        <p class="text-muted"><strong>Brand:</strong> {{ product.brand }} · <strong>Category:</strong> {{ product.category }} · <strong>vendor:</strong>
+        {% if product.user %}
+          {{ product.user.username }}
+        {% else %}
+          Anonymous
+        {% endif %}
+        </p>
         <p>{{ product.description }}</p>
 
         <div class="mb-3">

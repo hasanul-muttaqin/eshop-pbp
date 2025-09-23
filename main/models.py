@@ -1,5 +1,6 @@
 import uuid
 from django.db import models
+from django.contrib.auth.models import User
 
 class Product(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -12,6 +13,7 @@ class Product(models.Model):
     category = models.CharField(max_length=100)  # Kategori produk
     stock = models.PositiveIntegerField(default=0)  # Jumlah stok
     is_featured = models.BooleanField(default=False)  # Status unggulan
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True) #user yg post barang
 
     created_at = models.DateTimeField(auto_now_add=True)  # otomatis isi saat dibuat
     updated_at = models.DateTimeField(auto_now=True)  # otomatis update setiap save()
@@ -22,3 +24,4 @@ class Product(models.Model):
     @property
     def is_in_stock(self):
         return self.stock > 0
+

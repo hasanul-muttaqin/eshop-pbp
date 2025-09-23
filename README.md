@@ -132,3 +132,9 @@ show_json()
 
 show_json_by_id()
 ![alt text](image-3.png)
+
+---
+
+# Tugas 3
+
+### Penting: aku ga lupa naro last login, cuman aku style biar dia muncul di footer
