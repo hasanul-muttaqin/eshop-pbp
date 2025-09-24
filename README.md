@@ -202,4 +202,13 @@ autentikasi adalah proses memverifikasi identitas user sedangkan otorisasi adala
 2. ###  Membuat dua (2) akun pengguna dengan masing-masing tiga (3) dummy data menggunakan model yang telah dibuat sebelumnya untuk setiap akun di lokal.
     - register dua akun
     - add 3 product ke masing-masing akun
-
+3. ###  Menghubungkan model Product dengan User.
+    - import User dari django ke model
+    - menambahkan parameter user, null=True digunakan agar model yang sebelumnya tidak memiliki user tidak corrupt
+    - melakukan makemigrations dan migrate models
+    - mengganti fungsi main_view di views untuk memasukan request.user sebagai parameter user
+4. ### Menampilkan detail informasi pengguna yang sedang logged in seperti username dan menerapkan cookies seperti last_login pada halaman utama aplikasi.
+    - menambahkan request.COOKIES.get('last_login','never') ke main_view() lalu memasukkanya ke context dan kemudian menampilkan data di footer main.html
+    - menambahkan request.user ke main_view() yang di-pass ke context lalu menampilkan username user di main.view
+    - mmenambahkan if statements ke main.html untuk menunjukkan nama user atau anonymous untuk menunjukkan nama vendor di product cards di main.html dan show_products.html
+    - membuat if statements di fungsi main_view() untuk filter products apa yang di load(product user atau semua product) ke list products di context. filter bisa diganti dari dropdown form yang ada di main.html
