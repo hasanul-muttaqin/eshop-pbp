@@ -2,23 +2,23 @@
 
 ## 1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
 
-    - langkah 1: menjalankan perintah 'django-admin startproject eshop_pbp' di directory eshop-pbp via windows powershell. langkah ini dilakukan untuk menyiapkan struktur projek(manage.py dan juga folder eshop_pbp yang berisi settings.py, urls.py, dll)
+- langkah 1: menjalankan perintah 'django-admin startproject eshop_pbp' di directory eshop-pbp via windows powershell. langkah ini dilakukan untuk menyiapkan struktur projek(manage.py dan juga folder eshop_pbp yang berisi settings.py, urls.py, dll)
 
-    - langkah 2: membuat aplikasi main dengan menjalankan 'python manage.py startapp main' di directory eshop_pbp dan kemudian menambahkan main ke eshop_pbp/settings.py agar aplikasi dikenali
+- langkah 2: membuat aplikasi main dengan menjalankan 'python manage.py startapp main' di directory eshop_pbp dan kemudian menambahkan main ke eshop_pbp/settings.py agar aplikasi dikenali
 
-    - langkah 3: import admin dari django.contrib serta import path & include dari django.urls lalu include main.urls untuk mengarahkan root ke */main/urls.py
+- langkah 3: import admin dari django.contrib serta import path & include dari django.urls lalu include main.urls untuk mengarahkan root ke */main/urls.py
 
-    - langkah 4: import models dari django.db ke */main/models.py dan buat class product(yg extend class model) dengan attribut yang sudah ditentukan di tugas serta magic function __str__ yang mengembalikan nama
+- langkah 4: import models dari django.db ke */main/models.py dan buat class product(yg extend class model) dengan attribut yang sudah ditentukan di tugas serta magic function __str__ yang mengembalikan nama
 
-    - langkah 5: import render dari django.shortcuts dan import class product ke */main/views.py yang sudah diberikan tadi lalu buat fungsi main_view() yang return model yang sudah di-render
+- langkah 5: import render dari django.shortcuts dan import class product ke */main/views.py yang sudah diberikan tadi lalu buat fungsi main_view() yang return model yang sudah di-render
 
-    - langkah 6: import path ke */main/urls.py dan routing ke fungsi main_view()
+- langkah 6: import path ke */main/urls.py dan routing ke fungsi main_view()
 
-    - langkah 7: membuat main.html di template yang nantinya akan jadi template untuk di-render di web
+- langkah 7: membuat main.html di template yang nantinya akan jadi template untuk di-render di web
 
-    - langkah 8: melakukan fungsi 'python manage.py makemigrations' dan 'python manage.py migrate' untuk migrasi model ke template
+- langkah 8: melakukan fungsi 'python manage.py makemigrations' dan 'python manage.py migrate' untuk migrasi model ke template
 
-    - langkah 9: login ke PWS dari situs PBP dan mengisi environs lalu push ke server dengan 'git push pws master'
+- langkah 9: login ke PWS dari situs PBP dan mengisi environs lalu push ke server dengan 'git push pws master'
 
 ## 2. Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
 ![alt text](AlurKerjaDjango.png)
@@ -28,21 +28,21 @@
 ## 3. Jelaskan peran settings.py dalam proyek Django!
 ### settings.py adalah konfigurasi pusat proyek. Perannya meliputi:
 
-         Menentukan daftar aplikasi terpasang (INSTALLED_APPS).
+Menentukan daftar aplikasi terpasang (INSTALLED_APPS).
 
-        - Konfigurasi database (DATABASES).
+- Konfigurasi database (DATABASES).
 
-        - Konfigurasi template (TEMPLATES) dan lokasi template directory.
+- Konfigurasi template (TEMPLATES) dan lokasi template directory.
 
-        - Middleware yang aktif (MIDDLEWARE).
+- Middleware yang aktif (MIDDLEWARE).
 
-        - STATIC_URL, STATIC_ROOT, dan konfigurasi static files.
+- STATIC_URL, STATIC_ROOT, dan konfigurasi static files.
 
-        - SECRET_KEY, DEBUG, ALLOWED_HOSTS.
+- SECRET_KEY, DEBUG, ALLOWED_HOSTS.
 
-        - Pengaturan i18n/l10n (bahasa dan zona waktu).
+- Pengaturan i18n/l10n (bahasa dan zona waktu).
 
-        - Pengaturan autentikasi, email, logging, dan konfigurasi pihak ketiga.
+- Pengaturan autentikasi, email, logging, dan konfigurasi pihak ketiga.
 
 ## 4. Bagaimana cara kerja migrasi database di Django?
     makemigrations: django akan mebuat file migrasi yang merepresentasikan perubahan model sebagai operasi CreateModel, AddField, AlterField, dll.
@@ -50,17 +50,17 @@
 
 ## 5. Menurut Anda, dari semua framework yang ada, mengapa framework Django dijadikan permulaan pembelajaran pengembangan perangkat lunak?
 
-    - Django memiliki banyak fitur built in
+- Django memiliki banyak fitur built in
 
-    - pola MTV yang sederhana sehingga lebih mudah dipahami
+- pola MTV yang sederhana sehingga lebih mudah dipahami
 
-    - dokumentasi django yang mudah sehingga lebih mudah untuk pelajar dan pemula
+- dokumentasi django yang mudah sehingga lebih mudah untuk pelajar dan pemula
 
-    - keamanan dari banyak celah umum (CSRF, XSS, SQL injection)
+- keamanan dari banyak celah umum (CSRF, XSS, SQL injection)
     
-    - komunitas dan ekosistem yang besar sehingga third party package dan tutorial
+- komunitas dan ekosistem yang besar sehingga third party package dan tutorial
 
-    - cocok untuk prototyping karena proses development yang cepat.
+- cocok untuk prototyping karena proses development yang cepat.
 
 ## 6. Apakah ada feedback untuk asisten dosen tutorial 1 yang telah kamu kerjakan sebelumnya?
     ga ada, slide sudah cukup jelas sehingga asistensi tidak terlalu diperlukan. tapi respons asdos cepat dalam menanggapi pertanyaan mahasiswa dan penjelasan yang diberikan mudah diikuti.
@@ -137,4 +137,69 @@ show_json_by_id()
 
 # Tugas 3
 
-### Penting: aku ga lupa naro last login, cuman aku style biar dia muncul di footer
+### **Penting: aku ga lupa naro last login, cuman aku style biar dia muncul di footer**
+
+## 1. Apa itu Django AuthenticationForm? Jelaskan juga kelebihan dan kekurangannya.
+authentication form adalah form bawaan django yang berguna untuk membanfingkan input username dan password dengan instansi user yang tertera di database dan juga memastikan akun user aktif(tidak di-disable)
+### kelebihan:
+- merupakan built in function
+- terintegrasi dengan sistem user dan backend django
+- memiliki keamanan standar(CSRF token, password hashing, etc)
+### kekurangan
+- tidak fleksibel
+- perlu subclassing untuk kostumisasi logic dan UI
+- tidak cocok untuk logic complex
+
+## 2.  Apa perbedaan antara autentikasi dan otorisasi? Bagaiamana Django mengimplementasikan kedua konsep tersebut?
+autentikasi adalah proses memverifikasi identitas user sedangkan otorisasi adalah proses memberi izin atau hak akses user.
+
+### autentikasi:
+- menggunakan django.contrib.auth, seperti authenticate(), login(), logout()
+- membandingkan data(username dan password) input untuk mengambil instance user tersebut dari database
+### otorisasi:
+- menggunakan decorators(e.g @loginrequired) atau user function(user.has_perm())
+- cek variable seperti: is_staff, is_authenticated atau variable permission costume untuk determine akses view
+
+## 3.  Apa saja kelebihan dan kekurangan session dan cookies dalam konteks menyimpan state di aplikasi web?
+### cookies:
+#### kelebihan:
+- disimpan di browser client, sehingga tidak perlu memori di server
+- mudah diakses oleh client side
+#### kekurangan:
+- rawan manipulasi
+- tidak terintegrasi sebaik session
+- rentan data leak
+### session:
+#### kelebihan:
+- disimpan di server, sehingga tidak mudah diakses dan lebih secure
+- terintegrasi dengan API django
+#### kekurangan:
+- perlu memori di server
+- tidak stateless sehingga beban memori bertambah setiap request
+
+## 4. Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai? Bagaimana Django menangani hal tersebut?
+### Tidak
+- bisa diakses dari client side
+- http section bisa di-intercept dengan session hijacking
+### Metode pengamanan django
+- HttpOnly:true, sehingga cookies tidak bisa diakses lewat JS
+- Secure:true, sehingga request hanya bisa via https
+- SESSION_COOKIE_AGE, untuk batas waktu cookies bisa di kostumisasi
+- CSRF, django generate CSRF token untuk menjaga dari serang CSRF
+
+## 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+1. ### implementasi fungsi registrasi, login, logout:
+    - import UserCreationForm, messages, AuthenticationForm, authenticate, login, logout, reverse, login_required, UserCreationForm dan AuthenticationForm dari library django
+    - menambahkan fungsi register yang melakukan POST request dengan UserCreationForm built in django untuk menambah user ke database
+    - menambah fungsi login yang melakukan POST request dengan AuthenticationForm built in.
+        - username dan password user dibandingkan dengan database untuk cek apakah user ada di data base
+        - instance user yang sesuai diambil dari database
+        - fungsi membuka session untuk client
+    - menambah fungsi logout yang terminate session dengan fungsi bawaan reverse dari django
+    - menggunakan template login dan register yang disediakan di tutorial untuk laman login dan register
+    - import fungsi .views ke .urls dan menghubungkan laman dan fungsi di url path
+    - menambah decorator login_required ke main_view() dan show_products()
+2. ###  Membuat dua (2) akun pengguna dengan masing-masing tiga (3) dummy data menggunakan model yang telah dibuat sebelumnya untuk setiap akun di lokal.
+    - register dua akun
+    - add 3 product ke masing-masing akun
+
