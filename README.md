@@ -215,7 +215,7 @@ autentikasi adalah proses memverifikasi identitas user sedangkan otorisasi adala
 
 ---
 
-# Tugas 5
+# Tugas 4
 
 ## 1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
 Urutan prioritas (specificity) dimulai dari deklarasi yang diberi `!important`, diikuti inline style (`style="..."`), selector dengan ID, selector kelas/atribut/pseudo-class, lalu selector elemen dan pseudo-elemen. Jika tingkat specificity sama, aturan yang muncul paling akhir di stylesheet yang sama yang dipakai.
