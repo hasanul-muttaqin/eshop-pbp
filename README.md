@@ -239,3 +239,12 @@ Properti tersebut juga bisa menggunakan notasi shorthand (top-right-bottom-left)
 - Grid layout adalah modul dua dimensi yang memungkinkan kontrol baris dan kolom sekaligus, cocok untuk dashboard atau galeri karena setiap cell dapat diatur ukurannya dan posisinya secara eksplisit. Keduanya sering dikombinasikan: grid untuk kerangka besar, flexbox untuk isi tiap cell.
 
 ## 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+1. Menambahkan view `edit_product()` dan `delete_products()` di `main/views.py` untuk menangani pembaruan serta penghapusan entri. Kedua view dihubungkan lewat `main/urls.py` dan dibatasi `login_required` dan juga dengan product.user =  request.user supaya hanya pemilik produk yang bisa mengubah data.
+
+2. Mengaktifkan Tailwind CDN di `templates/base.html` dan menulis stylesheet kustom `static/css/global.css` untuk komponen formulir. Kelas `form-style` dipakai di halaman login, register, tambah, dan edit produk (`main/templates/login.html`, `main/templates/register.html`, `main/templates/create_products.html`, `main/templates/edit_products.html`) agar input, checkbox, dan validasi tampil konsisten.
+
+3. mengedit halaman daftar dan kartu produk (`main/templates/main.html`, `main/templates/card_products.html`) menjadi layout responsif. Jika belum ada data, template menampilkan ilustrasi `static/image/no_products.png` dan pesan kosong; bila ada data, tiap kartu memuat gambar/placeholder, vendor, harga, dan ringkasan deskripsi dengan grid adaptif.
+
+4. Menambahkan tombol edit dan delete langsung di setiap kartu pada `main/templates/card_products.html`, dengan kondisi render `product.user == user` supaya hanya pemilik yang melihat aksinya.
+
+5. Membangun navbar responsif di `templates/navbar.html` menggunakan flexbox untuk desktop dan menu hamburger untuk mobile. Script kecil men-toggle kelas `hidden` sehingga navigasi dan tombol login/register tetap dapat diakses di berbagai ukuran layar.
