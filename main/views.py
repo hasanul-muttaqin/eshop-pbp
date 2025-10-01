@@ -21,16 +21,21 @@ def main_view(request):
         products = Product.objects.filter(user=request.user)
     user = request.user
     cookies = request.COOKIES.get('last_login', 'Never')
-    return render(request, "main.html", {"products": products, "last_login": cookies, "filter": filter_type, "user": user})
+    context = {
+        "products": products,
+        "last_login": cookies,
+        "filter": filter_type,
+        "user": user}
+    return render(request, "main.html", context)
 
 def create_products(request):
-    form = ProductsForm(request.POST or None)  # no request.FILES needed for URLField
+    form = ProductsForm(request.POST or None) 
 
     if request.method == "POST" and form.is_valid():
         product_entry = form.save(commit=False)
         product_entry.user = request.user
         product_entry.save()
-        return redirect("main:main_view")   # sends user back to main list
+        return redirect("main:main_view")
 
     return render(request, "create_products.html", {"form": form})
 
@@ -109,4 +114,25 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+
+def delete_products(request, id):
+    product = get_object_or_404(Product, pk=id)
+    product.delete()
+    return HttpResponseRedirect(reverse('main:main_view'))
+
+
+def edit_product(request, id):
+    product = get_object_or_404(Product, pk=id)
+    form = ProductsForm(request.POST or None, instance=product)
+    if form.is_valid() and request.method == 'POST':
+        form.save()
+        return redirect('main:main_view')
+
+    context = {
+        'form': form
+    }
+
+    return render(request, "edit_products.html", context)
+
+
 

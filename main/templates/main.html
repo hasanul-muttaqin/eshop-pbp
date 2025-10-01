@@ -1,145 +1,63 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load humanize %}
+
+{% block meta %}
+<title>67 Sportswear</title>
+{% endblock meta %}
+
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>67 Sportswear</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body { background: linear-gradient(135deg,#f8fafc,#e0f2ff); font-family: 'Segoe UI', Tahoma, sans-serif; color:#1e293b; }
-    .shop-header {
-      background: linear-gradient(90deg,#3b82f6,#ef4444);
-      color: white;
-      padding: 12px 18px;
-      display:flex;
-      justify-content: space-between;
-      align-items:center;
-      border-radius: 0 0 12px 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-    }
-    .product-card {
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-      background: white;
-      transition: transform .15s, box-shadow .15s;
-      min-height: 280px; /* equal-sized cards */
-    }
-    .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 18px rgba(0,0,0,0.12); cursor:pointer; }
-    .product-thumb { max-height: 180px; object-fit: cover; border-radius: 10px; }
-    .featured-badge { position:absolute; top:10px; right:10px; background: linear-gradient(45deg,#ef4444,#fca5a5); color:white; padding:6px 12px; border-radius: 18px; font-weight:700; }
-    /* button styles (standardized) */
-    .credit {
-        text-align: right;
-        padding: 0px;
-        color: rgb(133, 151, 163);
-      }
-    .last-login {
-        text-align: left;
-        padding: 0px;
-        color: rgb(133, 151, 163);
-      }
-    footer {
-    display: flex;                 
-    justify-content: space-between; 
-    align-items: center;            
-    padding: 3px 8px;
-    } 
-    .top {
-      display:flex;
-      justify-content: space-between;
-      align-items:center;
-    }
-    .filter-wrapper select {
-    color: #000000;
-    font-weight: 600;
-    padding: 8px 36px 10px 12px;
-    border: #1e293b;
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,.15);
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 18px;
-    transition: background .2s;
-    margin-bottom: 20px
-  }
-  </style>
-</head>
-<body>
-  <div class="shop-header">
-    <div>🏆 67 Sportswear</div>
-    <div>
-      <!-- small red add button -->
-      <a href="{% url 'main:create_products' %}" class="btn btn-sm btn-danger">+ Add Product</a>
-      <a href="{%url 'main:logout' %}" class="btn btn-sm btn-danger">Logout</a>
-    </div>
-  </div>
-  <div class="container my-4">
-          <div class="top">
-            <form id="product-filter" method="get" class="filter-wrapper">
-              <select name="filter" onchange="this.form.submit()">
-                <option value="all" {% if request.GET.filter == 'all' %}selected{% endif %}>All products</option>
-                <option value="my"  {% if request.GET.filter == 'my'  %}selected{% endif %}>My products</option>
-              </select>
+{% include 'navbar.html' %}
+<div class="bg-blue-50 min-h-screen pt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <header class="mb-10 space-y-2">
+            <h1 class="text-3xl font-bold text-blue-900">67 Sportswear Catalog</h1>
+            <p class="text-blue-700/80">Browse and manage the latest products from the community.</p>
+        </header>
+
+        <section class="mb-10 flex flex-col gap-4 rounded-2xl border border-blue-200 bg-white p-6 shadow-sm md:flex-row md:items-center md:justify-between">
+            <form id="product-filter" method="get" class="flex items-center gap-3">
+                <label for="filter" class="text-sm font-semibold text-blue-900">Filter</label>
+                <select id="filter" name="filter" onchange="this.form.submit()" class="rounded-md border-2 border-blue-200 bg-white px-4 py-2 text-sm font-medium text-blue-900 focus:border-blue-500 focus:outline-none">
+                    <option value="all" {% if request.GET.filter == 'all' or not request.GET.filter %}selected{% endif %}>All products</option>
+                    <option value="my" {% if request.GET.filter == 'my' %}selected{% endif %}>My products</option>
+                </select>
             </form>
-            <div>
-              <h5 style="padding-bottom: 10px;">{{user}}</h5>
-            </div>
-          </div>
-    {% if products %}
-      {% for product in products %}
-        <div class="card product-card mb-4 p-3" onclick= location.href='{% url 'main:show_products' product.id %}'>
-          <div class="row g-3">
-            <div class="col-md-4 text-center">
-              <img src="{{ product.thumbnail }}" alt="{{ product.name }}" class="img-fluid product-thumb">
-            </div>
-            <div class="col-md-8">
-              <h5 class="mb-1">{{ product.name }}</h5>
-              <p class="text-muted mb-1">{{ product.brand }} • {{ product.category }} • 
-                {% if product.user %}
-                  {{ product.user.username }}
-                {% else %}
-                  Anonymous
+            <div class="flex flex-col gap-3 text-sm text-blue-700 md:flex-row md:items-center md:gap-6">
+                {% if user.is_authenticated %}
+                    <span class="font-medium">Last login: {{ last_login }}</span>
                 {% endif %}
-                </p>
-              <p class="mb-2 text-truncate" style="max-width:100%;">{{ product.description|truncatewords:25 }}</p>
-              <div class="d-flex justify-content-between align-items-end">
-                <div>
-                  <div class="fw-bold" style="color:#ef4444">Rp {{ product.price|intcomma }}</div>
-                  <div class="small text-primary">Stok: {{ product.stock }}</div>
+                <div class="flex gap-3">
+                    <a href="{% url 'main:create_products' %}" class="inline-flex items-center justify-center rounded-md bg-blue-700 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-800">
+                        + Add Product
+                    </a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'main:logout' %}" class="inline-flex items-center justify-center rounded-md border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 transition-colors hover:bg-blue-50">
+                            Logout
+                        </a>
+                    {% endif %}
                 </div>
-                <div>
-                  {% if product.is_featured %}
-                    <span class="featured-badge">🔥 Featured</span>
-                  {% endif %}
-                </div>
-              </div>
             </div>
-          </div>
-        </div>
-      {% endfor %}
-    {% else %}
-      {% if not products %}
-        {% if filter == "my" %}
-          <div class="alert alert-warning text-center">
-            You haven't added any product yet. 
-            <a href="{% url 'main:create_products' %}">Add one</a> now!
-          </div>
+        </section>
+
+        {% if products %}
+            {% include 'card_products.html' with products=products %}
         {% else %}
-          <div class="alert alert-info text-center">
-            No products available. Be the first to 
-            <a href="{% url 'main:create_products' %}">add one</a>!
-          </div>
+            <div class="rounded-2xl border border-blue-200 bg-white p-12 text-center shadow-sm">
+                <div class="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-blue-100 text-blue-500">
+                    <span class="text-3xl font-bold">67</span>
+                </div>
+                <h3 class="text-xl font-semibold text-blue-900 mb-2">No products yet</h3>
+                <p class="text-blue-700/80 mb-6">Share your first item or adjust the filter to see more products.</p>
+                <a href="{% url 'main:create_products' %}" class="inline-flex items-center justify-center rounded-md bg-blue-700 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-800">
+                    Create Product
+                </a>
+            </div>
         {% endif %}
-      {% endif %}
-    {% endif %}
-  </div>
-  <footer>
-    <p class="credit">67 Sportswear, by: B - Hasanul Muttaqin - 2406413331</p>
-    <p class="last-login">Last login: {{ last_login }}</p>
-  </footer>
-</body>
-</html>
-{% endblock %}
+
+        <footer class="mt-12 flex flex-col items-center justify-between gap-3 text-sm text-blue-700 md:flex-row">
+            <span>67 Sportswear, by: B - Hasanul Muttaqin - 2406413331</span>
+        </footer>
+    </div>
+</div>
+{% endblock content %}

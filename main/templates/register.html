@@ -1,33 +1,113 @@
 {% extends 'base.html' %}
 
 {% block meta %}
-<title>Register</title>
+<title>Register - 67 Sportswear</title>
 {% endblock meta %}
 
 {% block content %}
-<style>
-</style>
-<div>
-  <h1>Register</h1>
+<div class="min-h-screen bg-blue-50 flex items-center justify-center px-6 py-12">
+    <div class="max-w-md w-full">
+        <div class="bg-white rounded-2xl border border-blue-200 shadow-xl p-8 sm:p-10 form-style">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-blue-900 tracking-tight mb-3">Create Your Account</h2>
+                <p class="text-blue-600">Join the 67 Sportswear community and start sharing your catalog.</p>
+            </div>
 
-  <form method="POST">
-    {% csrf_token %}
-    <table>
-      {{ form.as_table }}
-      <tr>
-        <td></td>
-        <td><input type="submit" name="submit" value="Daftar" /></td>
-      </tr>
-    </table>
-  </form>
+            {% if form.non_field_errors %}
+                <div class="mb-6 space-y-2">
+                    {% for error in form.non_field_errors %}
+                        <div class="px-4 py-3 rounded-md text-sm border bg-red-50 border-red-200 text-red-700">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
 
-  {% if messages %}
-  <ul>
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
+            {% if form.errors %}
+                <div class="mb-6 space-y-2">
+                    {% for field, errors in form.errors.items %}
+                        {% if field != '__all__' %}
+                            {% for error in errors %}
+                                <div class="px-4 py-3 rounded-md text-sm border bg-red-50 border-red-200 text-red-700">
+                                    <strong>{{ field|title }}:</strong> {{ error }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="POST" action="" class="space-y-6">
+                {% csrf_token %}
+
+                <div>
+                    <label for="username" class="block text-sm font-semibold text-blue-900 mb-2">Username</label>
+                    <input
+                        id="username"
+                        name="username"
+                        type="text"
+                        value="{{ form.username.value|default:'' }}"
+                        required
+                        class="w-full px-4 py-3 rounded-md border-2 border-blue-200 bg-white text-blue-900 placeholder-blue-300 focus:outline-none focus:ring-0 focus:border-blue-500"
+                        placeholder="Choose a username">
+                </div>
+
+                <div>
+                    <label for="password1" class="block text-sm font-semibold text-blue-900 mb-2">Password</label>
+                    <input
+                        id="password1"
+                        name="password1"
+                        type="password"
+                        required
+                        class="w-full px-4 py-3 rounded-md border-2 border-blue-200 bg-white text-blue-900 placeholder-blue-300 focus:outline-none focus:ring-0 focus:border-blue-500"
+                        placeholder="Create a password">
+                </div>
+
+                <div>
+                    <label for="password2" class="block text-sm font-semibold text-blue-900 mb-2">Confirm Password</label>
+                    <input
+                        id="password2"
+                        name="password2"
+                        type="password"
+                        required
+                        class="w-full px-4 py-3 rounded-md border-2 border-blue-200 bg-white text-blue-900 placeholder-blue-300 focus:outline-none focus:ring-0 focus:border-blue-500"
+                        placeholder="Confirm your password">
+                </div>
+
+                <button
+                    type="submit"
+                    class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 px-4 rounded-md shadow-sm transition-colors">
+                    Create Account
+                </button>
+            </form>
+
+            {% if messages %}
+                <div class="mt-8 space-y-2">
+                    {% for message in messages %}
+                        <div
+                            class="px-4 py-3 rounded-md text-sm border
+                                {% if message.tags == 'success' %}
+                                    bg-blue-50 border-blue-200 text-blue-700
+                                {% elif message.tags == 'error' %}
+                                    bg-red-50 border-red-200 text-red-700
+                                {% else %}
+                                    bg-gray-50 border-gray-200 text-gray-700
+                                {% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="mt-10 text-center pt-6 border-t border-blue-100">
+                <p class="text-sm text-blue-700">
+                    Already have an account?
+                    <a href="{% url 'main:login' %}" class="font-semibold text-blue-700 underline-offset-2 hover:underline">
+                        Sign in
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
-
 {% endblock content %}

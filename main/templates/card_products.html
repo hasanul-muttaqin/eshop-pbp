@@ -1,0 +1,50 @@
+{% load static %}
+{% load humanize %}
+{% if products %}
+<div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+    {% for product in products %}
+        <article class="flex h-full flex-col rounded-2xl border border-blue-200 bg-white shadow-sm transition-shadow hover:shadow-lg">
+            <div class="relative overflow-hidden rounded-t-2xl">
+                {% if product.thumbnail %}
+                    <img src="{{ product.thumbnail }}" alt="{{ product.name }}" class="h-48 w-full object-cover">
+                {% else %}
+                    <img src="{% static 'image/no_products.png' %}" alt="No product thumbnail" class="h-48 w-full object-cover">
+                {% endif %}
+                {% if product.is_featured %}
+                    <span class="absolute top-4 right-4 inline-flex items-center gap-1 rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-600 shadow-sm">
+                        <span aria-hidden="true">&#128293;</span> Featured
+                    </span>
+                {% endif %}
+            </div>
+
+            <div class="flex flex-1 flex-col gap-3 p-6">
+                <h2 class="text-xl font-semibold text-blue-900">
+                    <a href="{% url 'main:show_products' product.id %}" class="transition-colors hover:text-blue-700">{{ product.name }}</a>
+                </h2>
+                <p class="text-sm text-blue-700/80">Vendor: {% if product.user %}{{ product.user.username }}{% else %}Anonymous{% endif %} &middot; Brand: {{ product.brand|default:"Unbranded" }}</p>
+                <p class="text-sm text-slate-600">{{ product.description|truncatewords:30 }}</p>
+                <div class="mt-auto flex items-center justify-between text-sm font-semibold text-blue-900">
+                    <span>Stock: {{ product.stock }}</span>
+                    <span>Rp {{ product.price|intcomma }}</span>
+                </div>
+            </div>
+
+            <div class="border-t border-blue-100 px-6 py-4 flex flex-wrap items-center justify-between gap-3">
+                <a href="{% url 'main:show_products' product.id %}" class="text-sm font-semibold text-blue-700 transition-colors hover:text-blue-900">Read more</a>
+                {% if user.is_authenticated and product.user == user %}
+                    <div class="flex items-center gap-2">
+                        <a href="{% url 'main:edit_product' product.id %}" class="inline-flex items-center gap-2 rounded-md border border-green-200 px-4 py-2 text-sm font-semibold text-green-600 transition-colors hover:bg-green-50 hover:text-green-700">
+                            Edit
+                        </a>
+                        <a href="{% url 'main:delete_products' product.id %}" class="inline-flex items-center gap-2 rounded-md border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 transition-colors hover:bg-red-50 hover:text-red-700">
+                            Delete
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </article>
+    {% endfor %}
+</div>
+{% else %}
+    <p class="rounded-lg border border-dashed border-blue-200 bg-white/60 p-8 text-center text-blue-700">No products to display yet.</p>
+{% endif %}

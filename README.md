@@ -1,4 +1,4 @@
-# Tugas 1
+﻿# Tugas 1
 
 ## 1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
 
@@ -103,7 +103,7 @@ fungsi is_valid()
 
 #### fungsi:
 - Django meletakkan token unik per sesi (atau cookie) dan memverifikasinya pada request POST/PUT/DELETE yang diterima.
-- Jika token tidak cocok/absent, middleware Django menolak request → mencegah tindakan atas nama pengguna tanpa izin.
+- Jika token tidak cocok/absent, middleware Django menolak request mencegah tindakan atas nama pengguna tanpa izin.
 #### risiko tidak memakai CSRF token
 - inject laman jahat untuk menggunakan sesi pengguna lain
 - korupsi data oleh sistem
@@ -212,3 +212,30 @@ autentikasi adalah proses memverifikasi identitas user sedangkan otorisasi adala
     - menambahkan request.user ke main_view() yang di-pass ke context lalu menampilkan username user di main.view
     - mmenambahkan if statements ke main.html untuk menunjukkan nama user atau anonymous untuk menunjukkan nama vendor di product cards di main.html dan show_products.html
     - membuat if statements di fungsi main_view() untuk filter products apa yang di load(product user atau semua product) ke list products di context. filter bisa diganti dari dropdown form yang ada di main.html
+
+---
+
+# Tugas 5
+
+## 1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+Urutan prioritas (specificity) dimulai dari deklarasi yang diberi `!important`, diikuti inline style (`style="..."`), selector dengan ID, selector kelas/atribut/pseudo-class, lalu selector elemen dan pseudo-elemen. Jika tingkat specificity sama, aturan yang muncul paling akhir di stylesheet yang sama yang dipakai.
+
+## 2. Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design, serta jelaskan mengapa!
+Responsive design memastikan tampilan nyaman di berbagai ukuran layar sehingga UX konsisten dan aksesibilitas meningkat. Misalnya, halaman utama Tokopedia sudah responsif: grid produk berubah dari banyak kolom di desktop menjadi satu kolom di ponsel sehingga mudah dinavigasi. Sebaliknya, beberapa portal akademik lama seperti SIAKAD versi klasik tidak responsif karena layout fix-width yang memaksa pengguna mobile melakukan zoom manual, menyebabkan interaksi sulit dan potensi salah input tinggi.
+
+## 3. Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+Margin adalah ruang di luar kotak elemen untuk memberi jarak antar elemen; border adalah garis yang mengelilingi kotak elemen; padding adalah ruang antara konten dan border. Implementasinya dengan properti CSS `margin`, `border`, dan `padding`, misalnya:
+```css
+.card {
+    margin: 1rem;
+    border: 1px solid #cbd5f5;
+    padding: 1.5rem;
+}
+```
+Properti tersebut juga bisa menggunakan notasi shorthand (top-right-bottom-left) atau bernilai spesifik per sisi (`margin-top`, `padding-inline`, dan sebagainya).
+
+## 4. Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+- Flexbox adalah modul layout satu dimensi untuk menyusun elemen secara horizontal *atau* vertikal dengan mudah (align, justify, order). Cocok untuk bar navigasi, card list, atau mendistribusikan ruang di dalam satu baris/kolom. 
+- Grid layout adalah modul dua dimensi yang memungkinkan kontrol baris dan kolom sekaligus, cocok untuk dashboard atau galeri karena setiap cell dapat diatur ukurannya dan posisinya secara eksplisit. Keduanya sering dikombinasikan: grid untuk kerangka besar, flexbox untuk isi tiap cell.
+
+## 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
