@@ -51,7 +51,7 @@
         <span class="text-3xl font-bold">67</span>
       </div>
       <h3 class="text-xl font-semibold text-blue-900 mb-2">No products found</h3>
-      <p class="text-blue-700/80 mb-6">Be the first to add a product.</p>
+      <p class="text-blue-700/80 mb-6" id="empty-message">Be the first to add a product.</p>
         <button onclick="openCreateModal()" class="inline-flex items-center justify-center rounded-md bg-blue-700 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-800">Create product</button>
     </div>
 
@@ -64,6 +64,7 @@
 <script>
   const PRODUCTS_API_ENDPOINT = "{% url 'main:show_json' %}";
   const CURRENT_USER_ID = "{{ user.id|default_if_none:'' }}";
+  const IS_SUPERUSER = "{{ user.is_superuser|yesno:'true,false' }}";
 
   const loadingSpinner = document.getElementById('loading');
   const errorMessage = document.getElementById('error');
@@ -104,7 +105,7 @@
     const linkEdit = `{% url 'main:edit_product' '00000000-0000-0000-0000-000000000000' %}`.replace('00000000-0000-0000-0000-000000000000', id);
     const linkDelete = `{% url 'main:delete_products' '00000000-0000-0000-0000-000000000000' %}`.replace('00000000-0000-0000-0000-000000000000', id);
 
-    const canEdit = CURRENT_USER_ID && Number(CURRENT_USER_ID) === Number(item.user_id);
+    const canEdit = (IS_SUPERUSER === 'true') || (CURRENT_USER_ID && Number(CURRENT_USER_ID) === Number(item.user_id));
 
     const imageHtml = thumbnail 
       ? `<img src="${thumbnail}" alt="${name}" class="h-48 w-full object-cover">`
@@ -146,6 +147,10 @@
   function filterAndDisplay() {
     const items = activeFilter === 'all' ? allProducts : allProducts.filter(p => Number(p.user_id) === Number(CURRENT_USER_ID));
     if (items.length === 0) {
+      const emptyMsg = document.getElementById('empty-message');
+      if (emptyMsg) {
+        emptyMsg.textContent = activeFilter === 'my' ? 'Add your own product.' : 'Be the first to add a product.';
+      }
       displayPageSection({ showEmpty: true });
     } else {
       renderAllProductCards(items);

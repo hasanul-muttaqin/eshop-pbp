@@ -19,7 +19,7 @@
                 {% if user.is_authenticated %}
                     <div class="text-right">
                         <div class="text-sm font-medium text-white">{{ name|default:user.username }}</div>
-                        <div class="text-xs text-blue-100">{{ npm|default:"Member" }} - {{ class|default:"Community" }}</div>
+                        <div class="text-xs text-blue-100">{% if user.is_superuser %}Owner{% else %}{{ npm|default:"Member" }}{% endif %} - {{ class|default:"Community" }}</div>
                     </div>
                     <a href="{% url 'main:logout' %}" class="text-white/90 hover:text-white font-medium transition-colors js-logout">
                         Logout
@@ -65,7 +65,7 @@
                 {% if user.is_authenticated %}
                     <div class="mb-4">
                         <div class="font-medium text-white">{{ name|default:user.username }}</div>
-                        <div class="text-sm text-blue-100">{{ npm|default:"Member" }} - {{ class|default:"Community" }}</div>
+                        <div class="text-sm text-blue-100">{% if user.is_superuser %}Owner{% else %}{{ npm|default:"Member" }}{% endif %} - {{ class|default:"Community" }}</div>
                     </div>
                     <a href="{% url 'main:logout' %}" class="block text-white/90 hover:text-white font-medium py-3 transition-colors js-logout">
                         Logout

@@ -31,7 +31,7 @@
 
             <div class="border-t border-blue-100 px-6 py-4 flex flex-wrap items-center justify-between gap-3">
                 <a href="{% url 'main:show_products' product.id %}" class="text-sm font-semibold text-blue-700 transition-colors hover:text-blue-900">Read more</a>
-                {% if user.is_authenticated and product.user == user %}
+                {% if user.is_authenticated and (product.user == user or user.is_superuser) %}
                     <div class="flex items-center gap-2">
                         <a href="{% url 'main:edit_product' product.id %}" class="inline-flex items-center gap-2 rounded-md border border-green-200 px-4 py-2 text-sm font-semibold text-green-600 transition-colors hover:bg-green-50 hover:text-green-700">
                             Edit
