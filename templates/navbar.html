@@ -21,7 +21,7 @@
                         <div class="text-sm font-medium text-white">{{ name|default:user.username }}</div>
                         <div class="text-xs text-blue-100">{{ npm|default:"Member" }} - {{ class|default:"Community" }}</div>
                     </div>
-                    <a href="{% url 'main:logout' %}" class="text-white/90 hover:text-white font-medium transition-colors">
+                    <a href="{% url 'main:logout' %}" class="text-white/90 hover:text-white font-medium transition-colors js-logout">
                         Logout
                     </a>
                 {% else %}
@@ -67,7 +67,7 @@
                         <div class="font-medium text-white">{{ name|default:user.username }}</div>
                         <div class="text-sm text-blue-100">{{ npm|default:"Member" }} - {{ class|default:"Community" }}</div>
                     </div>
-                    <a href="{% url 'main:logout' %}" class="block text-white/90 hover:text-white font-medium py-3 transition-colors">
+                    <a href="{% url 'main:logout' %}" class="block text-white/90 hover:text-white font-medium py-3 transition-colors js-logout">
                         Logout
                     </a>
                 {% else %}
@@ -92,5 +92,18 @@
                 mobileMenu.classList.toggle('hidden');
             });
         }
+
+        // Intercept logout to show toast first then redirect
+        const logoutLinks = document.querySelectorAll('a.js-logout');
+        logoutLinks.forEach((lnk) => {
+            lnk.addEventListener('click', async (e) => {
+                e.preventDefault();
+                try {
+                    await fetch(lnk.href, { method: 'GET', headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+                } catch (err) { /* ignore */ }
+                showToast('Logged out', 'You have been signed out.', 'info');
+                setTimeout(() => { window.location.href = "{% url 'main:login' %}"; }, 800);
+            });
+        });
     </script>
 </nav>

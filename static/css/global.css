@@ -54,3 +54,11 @@
     border-color: #1f3c88;
     box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.25);
 }
+
+/* Utility: clamp to 2 lines */
+.clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

@@ -248,3 +248,39 @@ Properti tersebut juga bisa menggunakan notasi shorthand (top-right-bottom-left)
 4. Menambahkan tombol edit dan delete langsung di setiap kartu pada `main/templates/card_products.html`, dengan kondisi render `product.user == user` supaya hanya pemilik yang melihat aksinya.
 
 5. Membangun navbar responsif di `templates/navbar.html` menggunakan flexbox untuk desktop dan menu hamburger untuk mobile. Script kecil men-toggle kelas `hidden` sehingga navigasi dan tombol login/register tetap dapat diakses di berbagai ukuran layar.
+
+---
+
+# Tugas 6
+
+## 1. Apa perbedaan antara synchronous request dan asynchronous request?
+Synchronous request memblokir alur eksekusi sampai respons diterima. Pada web tradisional, ini berarti halaman penuh direfresh untuk setiap aksi. Asynchronous request (AJAX/fetch) berjalan di latar tanpa memblokir UI; halaman tidak perlu reload, dan kita bisa memperbarui sebagian DOM saat respons datang. Dampaknya: synchronous terasa lambat dan “patah”, sementara asynchronous terasa responsif karena interaksi dan render bisa berjalan bersamaan.
+
+## 2. Bagaimana AJAX bekerja di Django (alur request–response)?
+Ringkasnya:
+- Client menjalankan `fetch()`/XHR dengan URL Django (mis. `path('json/', show_json, ...)`).
+- Django URL resolver (urls.py) memetakan ke view (views.py).
+- View memproses request (validasi, DB query) dan mengembalikan JSON/HTTP 2xx/4xx (sering via `JsonResponse`).
+- Client menerima respons, lalu JS memperbarui DOM (mis. render list produk, menutup modal, menampilkan toast) tanpa reload halaman.
+- Untuk form, kita kirim `FormData` + CSRF token; Django memverifikasi CSRF dan kredensial (untuk auth) sebelum menulis data.
+
+## 3. Apa keuntungan menggunakan AJAX dibandingkan render biasa di Django?
+- Interaksi lebih cepat: tidak ada full page reload, hanya data yang berubah yang dikirim/diterima.
+- UX lebih baik: loading/empty/error state bisa ditangani inline dengan animasi/feedback langsung.
+- Hemat bandwidth: payload umumnya JSON kecil, bukan HTML penuh.
+- Komposabilitas: endpoint JSON yang sama bisa dipakai banyak komponen/halaman.
+- Kontrol UI granular: kita bisa menyegarkan sebagian kecil UI (mis. satu kartu produk) tanpa menyentuh bagian lain.
+
+## 4. Bagaimana cara memastikan keamanan saat menggunakan AJAX untuk fitur Login dan Register di Django?
+- CSRF protection: sertakan `X-CSRFToken`/`csrfmiddlewaretoken` pada request POST; pastikan `CsrfViewMiddleware` aktif.
+- Sanitasi input: gunakan form Django (UserCreationForm/AuthenticationForm) dan/atau `strip_tags` untuk field teks bebas; validasi di server tetap wajib.
+- HTTPS: aktifkan `SECURE_SSL_REDIRECT`, `SESSION_COOKIE_SECURE`, `CSRF_COOKIE_SECURE` agar kredensial tidak bocor.
+- Session & auth bawaan: gunakan `login()`/`logout()` dan middleware session Django; jangan bikin token auth custom tanpa kebutuhan.
+- Batasi informasi error: kirim pesan error generik (hindari mengungkap apakah username ada/tidak), dan rate-limit bila perlu.
+
+## 5. Bagaimana AJAX mempengaruhi pengalaman pengguna (User Experience) pada website?
+- Responsif: aksi terasa instan karena tidak perlu muat ulang halaman.
+- Konsistensi konteks: state UI (scroll, filter, modal) tidak hilang tiap aksi.
+- Feedback jelas: loading spinner, empty/error state, dan toast memberi kepastian status aksi.
+- Aksesibilitas lebih baik: bila diimplementasikan dengan tepat (fokus, ARIA live regions), pembaca layar juga memperoleh feedback yang benar.
+- Perceived performance meningkat: meski total kerja sama, transisi mikro yang mulus membuat aplikasi terasa cepat dan modern.

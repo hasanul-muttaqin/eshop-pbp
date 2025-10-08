@@ -22,7 +22,7 @@
                     <a href="{% url 'main:show_products' product.id %}" class="transition-colors hover:text-blue-700">{{ product.name }}</a>
                 </h2>
                 <p class="text-sm text-blue-700/80">Vendor: {% if product.user %}{{ product.user.username }}{% else %}Anonymous{% endif %} &middot; Brand: {{ product.brand|default:"Unbranded" }}</p>
-                <p class="text-sm text-slate-600">{{ product.description|truncatewords:30 }}</p>
+                <p class="text-sm text-slate-600 clamp-2">{{ product.description}}</p>
                 <div class="mt-auto flex items-center justify-between text-sm font-semibold text-blue-900">
                     <span>Stock: {{ product.stock }}</span>
                     <span>Rp {{ product.price|intcomma }}</span>
