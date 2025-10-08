@@ -254,7 +254,7 @@ Properti tersebut juga bisa menggunakan notasi shorthand (top-right-bottom-left)
 # Tugas 6
 
 ## 1. Apa perbedaan antara synchronous request dan asynchronous request?
-Synchronous request memblokir alur eksekusi sampai respons diterima. Pada web tradisional, ini berarti halaman penuh direfresh untuk setiap aksi. Asynchronous request (AJAX/fetch) berjalan di latar tanpa memblokir UI; halaman tidak perlu reload, dan kita bisa memperbarui sebagian DOM saat respons datang. Dampaknya: synchronous terasa lambat dan “patah”, sementara asynchronous terasa responsif karena interaksi dan render bisa berjalan bersamaan.
+Synchronous request memblokir alur execution sampai response diterima. Pada web tradisional, ini berarti halaman penuh direfresh untuk setiap aksi. Asynchronous request (AJAX/fetch) berjalan di latar tanpa memblokir UI. halaman tidak perlu reload, dan kita bisa memperbarui sebagian DOM saat respons datang. sehingga synchronous terasa lambat dan “patah”, sementara asynchronous terasa responsif karena interaksi dan render bisa berjalan bersamaan.
 
 ## 2. Bagaimana AJAX bekerja di Django (alur request–response)?
 Ringkasnya:
@@ -269,7 +269,7 @@ Ringkasnya:
 - UX lebih baik: loading/empty/error state bisa ditangani inline dengan animasi/feedback langsung.
 - Hemat bandwidth: payload umumnya JSON kecil, bukan HTML penuh.
 - Komposabilitas: endpoint JSON yang sama bisa dipakai banyak komponen/halaman.
-- Kontrol UI granular: kita bisa menyegarkan sebagian kecil UI (mis. satu kartu produk) tanpa menyentuh bagian lain.
+- Kontrol UI granular: kita bisa refresh sebagian kecil UI (e.g satu kartu produk) tanpa menyentuh bagian lain.
 
 ## 4. Bagaimana cara memastikan keamanan saat menggunakan AJAX untuk fitur Login dan Register di Django?
 - CSRF protection: sertakan `X-CSRFToken`/`csrfmiddlewaretoken` pada request POST; pastikan `CsrfViewMiddleware` aktif.
@@ -283,4 +283,4 @@ Ringkasnya:
 - Konsistensi konteks: state UI (scroll, filter, modal) tidak hilang tiap aksi.
 - Feedback jelas: loading spinner, empty/error state, dan toast memberi kepastian status aksi.
 - Aksesibilitas lebih baik: bila diimplementasikan dengan tepat (fokus, ARIA live regions), pembaca layar juga memperoleh feedback yang benar.
-- Perceived performance meningkat: meski total kerja sama, transisi mikro yang mulus membuat aplikasi terasa cepat dan modern.
+- Perceived performance meningkat: meski total kerja sama, transisi mikro yang mulus membuat aplikasi terasa lebih cepat.
