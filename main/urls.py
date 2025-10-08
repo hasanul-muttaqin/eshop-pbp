@@ -1,7 +1,21 @@
 from django.urls import path
-from .views import main_view, create_products, show_products, show_json, show_xml, show_json_by_id, show_xml_by_id
-from .views import register, login_user, logout_user, edit_product
-from .views import delete_products
+from .views import (
+    main_view,
+    create_products,
+    show_products,
+    show_json,
+    show_xml,
+    show_json_by_id,
+    show_xml_by_id,
+    register,
+    login_user,
+    logout_user,
+    edit_product,
+    delete_products,
+    add_product_entry_ajax,
+    update_product_entry_ajax,
+    delete_product_entry_ajax,
+)
 
 app_name = "main"
 
@@ -18,4 +32,7 @@ urlpatterns = [
     path('logout/', logout_user, name='logout'),
     path("products/<uuid:id>/edit", edit_product, name= 'edit_product'),
     path("products/<uuid:id>/delete", delete_products, name= 'delete_products'),
+    path('create-products-ajax', add_product_entry_ajax, name='add_product_entry_ajax'),
+    path('products/<uuid:id>/update-ajax', update_product_entry_ajax, name='update_product_entry_ajax'),
+    path('products/<uuid:id>/delete-ajax', delete_product_entry_ajax, name='delete_product_entry_ajax'),
 ]

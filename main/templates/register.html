@@ -37,7 +37,7 @@
                 </div>
             {% endif %}
 
-            <form method="POST" action="" class="space-y-6">
+            <form method="POST" action="" class="space-y-6" id="registerForm">
                 {% csrf_token %}
 
                 <div>
@@ -110,4 +110,34 @@
         </div>
     </div>
 </div>
+<script>
+  (function() {
+    const form = document.getElementById('registerForm');
+    if (!form) return;
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const csrf = form.querySelector('input[name="csrfmiddlewaretoken"]').value;
+      try {
+        const res = await fetch("{% url 'main:register' %}", {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': csrf
+          }
+        });
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          showToast('Registration failed', 'Please check the form fields.', 'error');
+          return;
+        }
+        showToast('Account created', 'Redirecting to login...', 'success');
+        window.location.href = data.redirect_url || "{% url 'main:login' %}";
+      } catch (err) {
+        showToast('Registration error', 'Unexpected error occurred.', 'error');
+      }
+    });
+  })();
+</script>
 {% endblock content %}

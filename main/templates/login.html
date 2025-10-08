@@ -35,7 +35,7 @@
                 </div>
             {% endif %}
 
-            <form method="POST" action="" class="space-y-6">
+            <form method="POST" action="" class="space-y-6" id="loginForm">
                 {% csrf_token %}
 
                 <div>
@@ -97,4 +97,41 @@
         </div>
     </div>
 </div>
+<script>
+  (function() {
+    const form = document.getElementById('loginForm');
+    if (!form) return;
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const csrf = form.querySelector('input[name="csrfmiddlewaretoken"]').value;
+      try {
+        const res = await fetch("{% url 'main:login' %}", {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': csrf
+          }
+        });
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          showToast('Login failed', 'Please check your credentials.', 'error');
+          return;
+        }
+        showToast('Login successful', '', 'success');
+        window.location.href = data.redirect_url || "{% url 'main:main_view' %}";
+      } catch (err) {
+        showToast('Login error', 'Unexpected error occurred.', 'error');
+      }
+    });
+    // Detect logout redirect
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('logged_out') === '1') {
+        showToast('Logged out', 'You have been signed out.', 'info');
+      }
+    } catch (e) {}
+  })();
+</script>
 {% endblock content %}
